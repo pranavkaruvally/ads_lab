@@ -39,8 +39,8 @@ void search() {
     scanf("%d", &element);
     for (int* i=arr_beg+1; i <= top; i++)
         if (*i == element) {
-            printf("Item present\n");
-            break;
+            printf("Item present at %ld\n", (i - arr_beg - 1));
+            return ;
         }
     printf("Item not present\n");
 }
