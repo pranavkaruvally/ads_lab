@@ -10,28 +10,27 @@ struct node head;
 int list_len = 0;
 
 void insertion(int data, int pos) {
-    struct node newnode;
-    newnode.data = data;
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    newnode->data = data;
 
     if (pos == 0) {
-        newnode.next = head.next;
-        head.next = &newnode;
-        list_len++;
+        newnode->next = head.next;
+        head.next = newnode;
     }
-    else if (pos == list_len+1) {
+    else if (pos == list_len) {
         struct node *temp = &head;
         while (temp->next != NULL) {
             temp = temp->next;
         }
-        temp->next = &newnode;
-        newnode.next = NULL;
+        temp->next = newnode;
+        newnode->next = NULL;
     }
     else {
         int i = 0;
         struct node *temp = &head;
 
-        while (i < pos-1) {
-            if (temp->next != NULL && temp->next->next != NULL) {
+        while (i < pos) {
+            if (temp->next != NULL) {
                 temp = temp->next;
                 i++;
             }
@@ -40,9 +39,10 @@ void insertion(int data, int pos) {
                 return;
             }
         }
-        newnode.next = temp->next;
-        temp->next = &newnode;
+        newnode->next = temp->next;
+        temp->next = newnode;
     }
+    list_len++;
 }
 
 void deletion(int pos) {
@@ -54,7 +54,7 @@ void deletion(int pos) {
         temp->next = NULL;
         free(temp);
     }
-    else if(pos == list_len) {
+    else if(pos == list_len - 1) {
         while (temp->next != NULL && temp->next->next != NULL) {
             temp = temp->next;
         }
@@ -81,6 +81,41 @@ void deletion(int pos) {
     }
 }
 
+void traversal() {
+    struct node *temp = &head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+        printf("%d\t", temp->data);
+    printf("\n");
+    }
+}
+
 int main() {
+    char ch;
+    do {
+        printf("Enter option: ");
+        scanf("%c", &ch);
+        switch(ch) {
+            case 'a':
+                int val, pos;
+                printf("Enter value: ");
+                scanf("%d", &val);
+                printf("Enter position: ");
+                scanf("%d", &pos);
+                insertion(val, pos);
+                break;
+            case 'd':
+                printf("Enter position: ");
+                scanf("%d", &pos);
+                deletion(pos);
+                break;
+            case 't':
+                traversal();
+                break;
+            case 'q':
+                return 0;
+        }
+    }while (ch != EOF);
+
     return 0;
 }
