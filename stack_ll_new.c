@@ -14,8 +14,10 @@ void push(int data) {
     node* newnode = (node*)malloc(sizeof(node));
     newnode->data = data;
 
-    if (top == NULL)
+    if (top == NULL) {
         top = newnode;
+        top->next = NULL;
+    }
     else if (newnode == NULL) /* malloc returns a NULL pointer if it fails to allocate memory */
         {
             printf("Stack overflow\n");
@@ -45,13 +47,49 @@ void update(void (*operation)(int), int data) {
     operation(data);
 }
 
+void display(void) {
+    node* temp = top;
+    node* disp_ll = NULL;
+    while (temp != NULL) {
+        node* newnode = malloc(sizeof(node));
+        newnode->data = temp->data;
+        temp = temp->next;
+        newnode->next = disp_ll;
+        disp_ll = newnode;
+    }
+    while (disp_ll != NULL) {
+        printf("%d\t", disp_ll->data);
+        node* temp = disp_ll;
+        disp_ll = disp_ll->next;
+        free(temp);
+    }
+    printf("\n");
+}
+
 int main() {
-    update(push, 5);
-    update(push, 7);
-    update(push, 8);
-    update(pop, -1);
-    update(push, 9);
-    update(pop, -1);
+    char op;
+    printf("Enter option: ");
+    while((op = getchar()) != EOF) {
+        switch(op) {
+            case PUSH:
+                int data;
+                printf("Enter data: ");
+                scanf("%d", &data);
+                update(push, data);
+                printf("Enter option: ");
+                break;
+            case POP:
+                update(pop, -1);
+                printf("Enter option: ");
+                break;
+            case DISP:
+                display();
+                printf("Enter option: ");
+                break;
+            case QUIT:
+                return 0;
+        }
+    }
 
     return 0;
 }
