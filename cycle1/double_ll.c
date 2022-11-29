@@ -6,7 +6,7 @@ typedef struct node {
     struct node *next, *prev;
 }node;
 
-node* head = NULL;
+node* head;
 int len = 0;
 
 void insert(int data, unsigned int pos) {
@@ -16,22 +16,16 @@ void insert(int data, unsigned int pos) {
     newnode->data = data;
 
     if (pos == 0) {
-        if (head == NULL) {
-            head = (node*)malloc(sizeof(node));
-            head->next = newnode;
-            newnode->prev = head;
-            newnode->next = NULL;
-        }
-        else {
-            node* temp = head->next;
-            head->next = newnode;
-            newnode->prev = head;
-            newnode->next = temp;
-            temp->prev = newnode;
-        }
+        newnode->next = head->next;
+        newnode->prev = head;
+        head->next = newnode;
+        if (newnode->next != NULL)
+            newnode->next->prev = newnode;
+        if (len > 0)printf("First element inside if: %p\n", head->next); // prints 0x560ebf14c2f0
+        if (len > 1)printf("Second element inside if: %p\n", head->next->next); // prints 0x55add22122c0
     }
 
-    if (pos == len) {
+    else if (pos == len) {
         node* temp = head;
         while (temp->next != NULL)
             temp = temp->next;
@@ -52,8 +46,9 @@ void insert(int data, unsigned int pos) {
         newnode->next = temp_next;
         temp_next->prev = newnode;
     }
-    
     len++;
+    if (len > 0)printf("First element outside if: %p\n", head->next); // prints 0x560ebf14c2f0
+    if (len > 1)printf("Second element outside if: %p\n", head->next->next); // prints 0x560ebf14c2f0
 }
 
 void delete(unsigned int pos) {
@@ -114,16 +109,19 @@ void search(int el) {
 }
 
 void display(void) {
-    if (head == NULL) {
+    if (head->next == NULL) {
         printf("Nothing to display\n");
         return;
     }
-    for (node* i=head->next; i != NULL; i = i->next)
+    unsigned int n = 0;
+    for (node* i=head->next; i != NULL && n < len; i = i->next, n++)
         printf("%d\n", i->data);
     
 }
 
 int main() {
+    head = (node*)malloc(sizeof(node));
+    head->next = NULL;
     insert(4, 0);
     insert(6, 1);
     insert(10, 2);
@@ -131,6 +129,8 @@ int main() {
     delete(1);
     display();
     search(8);
+    insert(1, 0);
+    display();
 
     return 0;
 }
