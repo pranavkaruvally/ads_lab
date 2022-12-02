@@ -13,6 +13,9 @@ int main() {
     int i=0;
 
     while ((ch = *infix++) != '\0') {
+        if (ch == ' ')
+            continue;
+
         if (is_num(ch)) {
             while (is_num(ch)) {
                 postfix[i++] = ch;
