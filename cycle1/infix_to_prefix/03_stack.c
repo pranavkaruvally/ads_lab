@@ -15,3 +15,13 @@ char pop(node** top) {
 
     return popped;
 }
+
+char peek(node* top) {
+    return top->data;
+}
+
+bool stack_is_empty(node* top) {
+    if (top == NULL)
+        return true;
+    return false;
+}
