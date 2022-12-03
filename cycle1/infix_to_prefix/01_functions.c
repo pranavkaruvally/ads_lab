@@ -18,7 +18,7 @@ void write_postfix(char* expression, char* filename) {
     FILE *fptr = fopen(filename, "w");
     fprintf(fptr, "%s", expression);
     fclose(fptr);
-    free(expression);
+    //free(expression);
 }
 
 int precedence(char ch) {
