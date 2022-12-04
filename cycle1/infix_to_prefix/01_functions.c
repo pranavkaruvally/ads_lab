@@ -39,12 +39,6 @@ int precedence(char ch) {
     return 0;
 }
 
-/*
-bool is_right_associative(char ch) {
-    return (ch == '^') ? true : false;
-}
-*/
-
 //Function which checks whether the scanned character is a number
 bool is_num(char n) {
     char num = n - '0';

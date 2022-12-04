@@ -1,14 +1,13 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include"01_functions.c"
-#include "02_definitions.h"
+#include <stdio.h>    
+#include <stdlib.h>    
+#include <stdbool.h>    
+#include"01_functions.c"    
+#include "02_definitions.h"    
 #include "03_stack.c"
 
 int main() {
     node* top = NULL; //Stack to be used
-    char* infix = read_infix("infix.txt"); //Infix expression
+    char* infix = read_infix(input); //Infix expression
     char ch, op, temp, postfix[1000];
     int i=0;
 
@@ -76,7 +75,7 @@ int main() {
         postfix[i++] = ' ';
     }
     postfix[i] = '\0';
-    write_postfix(postfix, "postfix.txt");
+    write_postfix(postfix, output);
 
     return 0;
 }
