@@ -1,7 +1,7 @@
 #define EXP_SIZE 1000
 
 //A function to read input from the required file
-char* read_infix(char* filename) {
+char* read_infix(const char* filename) {
     char* expression = (char*)calloc(EXP_SIZE, sizeof(char));
     FILE *fptr = fopen(filename, "r");
 
@@ -16,7 +16,7 @@ char* read_infix(char* filename) {
 }
 
 //A function to write output into a particular file
-void write_postfix(char* expression, char* filename) {
+void write_postfix(const char* expression, const char* filename) {
     FILE *fptr = fopen(filename, "w");
     fprintf(fptr, "%s", expression);
     fclose(fptr);
@@ -24,7 +24,7 @@ void write_postfix(char* expression, char* filename) {
 }
 
 //A function that denotes the precedence of the operators
-int precedence(char ch) {
+int precedence(const char ch) {
     switch(ch) {
         case '+':
         case '-':
@@ -40,9 +40,8 @@ int precedence(char ch) {
 }
 
 //Function which checks whether the scanned character is a number
-bool is_num(char n) {
+bool is_num(const char n) {
     char num = n - '0';
-    if (0 <= num && num <= 9)
-        return true;
-    return false;
+    bool condition = (0 <= num && num <= 9);
+    return condition ? true : false;
 }

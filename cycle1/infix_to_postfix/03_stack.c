@@ -1,5 +1,5 @@
 //The push function for stack
-void push(node** top, char val) {
+void push(node** top, const char val) {
     node* newnode = (node*)malloc(sizeof(node));
 
     newnode->data = val;
@@ -19,13 +19,11 @@ char pop(node** top) {
 }
 
 //Peek function to display the top most element in a stack
-char peek(node* top) {
+static inline char peek(const node* top) {
     return top->data;
 }
 
 //Function to check whether the stack is empty
-bool stack_is_empty(node* top) {
-    if (top == NULL)
-        return true;
-    return false;
+static inline bool stack_is_empty(const node* top) {
+    return (top == NULL) ? true : false;
 }
