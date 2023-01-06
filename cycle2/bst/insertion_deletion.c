@@ -13,3 +13,15 @@ void insert(node** root, int data) {
             return insert(&(*root)->right, data);
     }
 }
+
+static node* search(node* root, int data) {
+    if (root->data == data)
+        return root;
+    
+    if (root->left != NULL)
+        return search(root->left, data);
+    if (root->right != NULL)
+        return search(root->right, data);
+
+    return NULL;
+}
