@@ -3,6 +3,7 @@
 #include "bst.c"
 #include "insertion_deletion.c"
 #include "traversal.c"
+#include "max_min_search.c"
 
 int main() {
     node* root = NULL;
@@ -20,6 +21,11 @@ int main() {
     printf("\n");
     postorder_traversal(root);
     printf("\n");
+
+    node* max = highest(root);
+    node* min = lowest(root);
+
+    printf("Max: %d, Min: %d\n", max->data, min->data);
 
     return 0;
 }
